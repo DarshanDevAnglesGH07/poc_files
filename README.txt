@@ -1,1 +1,3 @@
-CSV files for Neo4J
+**POC files**
+
+As of now it just has a simple Streamlit based chat app, and few csv files
