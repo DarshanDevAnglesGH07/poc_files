@@ -5,9 +5,9 @@ import os
 
 # Function to load the model
 @st.cache_resource
-def load_model(bucket_name, service_account_json, model_folder):
+def load_model(bucket_name, model_folder):
     # Initialize the Google Cloud Storage client
-    storage_client = storage.Client.from_service_account_json(service_account_json)
+    storage_client = storage.Client()  # Use default credentials
     bucket = storage_client.get_bucket(bucket_name)
 
     local_model_dir = "model-best"
@@ -27,11 +27,10 @@ def load_model(bucket_name, service_account_json, model_folder):
 
 # Set up parameters
 bucket_name = "ner-spacy-model"
-service_account_json = "dspl-ai-ml-coe-pocs-d5481b27bd85.json"
 model_folder = "model-best"
 
 # Load the model using the cached function
-nlp = load_model(bucket_name, service_account_json, model_folder)
+nlp = load_model(bucket_name, model_folder)
 
 # Streamlit UI
 st.header("Use of Customly created NER model", divider=True)
