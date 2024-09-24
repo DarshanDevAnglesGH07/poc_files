@@ -3,6 +3,9 @@ import spacy
 from google.cloud import storage
 import os
 
+
+#The model takes roughly 1.5 minute to load 
+
 # Function to load the model
 @st.cache_resource
 def load_model(bucket_name, model_folder):
