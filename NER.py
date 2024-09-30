@@ -1,17 +1,26 @@
 import streamlit as st
 import spacy
 import os
+import shutil
 
-@st.cache_resource
 def load_model(mount_folder):
-    local_model_dir = os.path.join(mount_folder, "model-best")
+    # Define the source and destination paths
+    source_model_dir = os.path.join(mount_folder, "model-best")
+    local_model_dir = "model-best"
 
-    # Check if the model directory exists
-    if not os.path.exists(local_model_dir):
-        st.error(f"Model directory '{local_model_dir}' does not exist.")
+    # Check if the source model directory exists
+    if not os.path.exists(source_model_dir):
+        st.error(f"Source model directory '{source_model_dir}' does not exist.")
         return None
 
-    # Load the spaCy model
+    # If the local model directory already exists, delete it
+    if os.path.exists(local_model_dir):
+        shutil.rmtree(local_model_dir)
+
+    # Copy the model from the mounted folder to the local directory
+    shutil.copytree(source_model_dir, local_model_dir)
+
+    # Load the spaCy model from the local directory
     nlp = spacy.load(local_model_dir)
     return nlp
 
