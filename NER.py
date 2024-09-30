@@ -2,6 +2,7 @@ import streamlit as st
 import spacy
 import os
 
+@st.cache_resource
 def load_model(mount_folder):
     local_model_dir = os.path.join(mount_folder, "model-best")
 
