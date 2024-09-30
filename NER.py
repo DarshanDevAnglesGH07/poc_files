@@ -1,15 +1,23 @@
 import streamlit as st
 import spacy
-from google.cloud import storage
 import os
 
-bucket_name = "ner-spacy-model"
-model_folder = "model-best"
+def load_model(mount_folder):
+    local_model_dir = os.path.join(mount_folder, "model-best")
 
-mount_point = "mounted-folder"
-os.system(f"gcloud storage mount {bucket_name} {mount_point}")
+    # Check if the model directory exists
+    if not os.path.exists(local_model_dir):
+        st.error(f"Model directory '{local_model_dir}' does not exist.")
+        return None
 
-nlp = spacy.load(os.path.join(mount_point, model_folder))
+    # Load the spaCy model
+    nlp = spacy.load(local_model_dir)
+    return nlp
+
+# Set the path to the mounted folder
+mount_folder = "mounted-folder"  # Path to the mounted folder
+
+nlp = load_model(mount_folder)
 
 st.header("Use of Customly created NER model", divider=True)
 text_input = st.text_input("Enter text for Brand/Product/Model Detection: ")
