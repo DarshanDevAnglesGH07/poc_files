@@ -4,11 +4,13 @@ import os
 import shutil
 
 def load_model(mount_folder):
-    # Define the source and destination paths
     source_model_dir = os.path.join(mount_folder, "model-best")
     local_model_dir = "model-best"
 
-    # Check if the source model directory exists
+    # Debugging: Log contents of the mounted folder
+    st.write("Checking contents of mounted folder:")
+    st.write(os.listdir(mount_folder))
+
     if not os.path.exists(source_model_dir):
         st.error(f"Source model directory '{source_model_dir}' does not exist.")
         return None
